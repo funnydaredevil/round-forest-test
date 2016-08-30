@@ -10,6 +10,7 @@ class ReviewRequestsController < ApplicationController
   # GET /review_requests/1
   # GET /review_requests/1.json
   def show
+    @reviews = @review_request.product_reviews
   end
 
   # GET /review_requests/new
@@ -25,6 +26,7 @@ class ReviewRequestsController < ApplicationController
   # POST /review_requests.json
   def create
     @review_request = ReviewRequest.new(review_request_params)
+    walmart_reviews_service.call
 
     respond_to do |format|
       if @review_request.save
@@ -70,5 +72,9 @@ class ReviewRequestsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def review_request_params
       params.require(:review_request).permit(:product_id, :search_text)
+    end
+
+    def walmart_reviews_service
+      @walmart_reviews_service ||= ::WalmartReviews.new(@review_request)
     end
 end
