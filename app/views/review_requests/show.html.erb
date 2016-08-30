@@ -10,5 +10,25 @@
   <%= @review_request.search_text %>
 </p>
 
+<h2>Product reviews:</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Product Review id</th>
+      <th>Search text</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @reviews.each do |review| %>
+      <tr>
+        <td><%= review.id %></td>
+        <td><%= review.review_text %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
 <%= link_to 'Edit', edit_review_request_path(@review_request) %> |
 <%= link_to 'Back', review_requests_path %>
